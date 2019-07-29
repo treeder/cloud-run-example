@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA', 'gcr.io/$PROJECT_ID/hello:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA', 'gcr.io/$PROJECT_ID/hello:$BRANCH_NAME']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/hello:$BRANCH_NAME']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [ 'beta', 'run', 'deploy', '--region', 'us-central1', '--image', 'gcr.io/$PROJECT_ID/hello', '--platform', 'managed' ]
+images:
+- 'gcr.io/$PROJECT_ID/hello'
