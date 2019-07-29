@@ -12,6 +12,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/hello:$BRANCH_NAME']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: [ 'beta', 'run', 'deploy', '--region', 'us-central1', '--image', 'gcr.io/$PROJECT_ID/hello', '--platform', 'managed' ]
+  args: [ 'beta', 'run', 'deploy', '--region', 'us-central1', '--image', 'gcr.io/$PROJECT_ID/hello', '--platform', 'managed', 'hello' ]
 images:
 - 'gcr.io/$PROJECT_ID/hello'
